@@ -1,0 +1,7 @@
+Host: WIN-ENDPOINT
+IP: 10.10.10.20
+Comando de coleta:
+(Get-Item "C:\Windows\Sysmon64.exe").VersionInfo.FileVersion
+
+Campo a registrar no relatório:
+Sysmon FileVersion

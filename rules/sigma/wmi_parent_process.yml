@@ -1,0 +1,20 @@
+title: WMI Spawned Process
+id: 8123b3b9-68a7-4e6c-98dc-12c13b9a1630
+status: experimental
+description: Detecta processo criado a partir de WmiPrvSE.exe.
+author: Gustavo Ribeiro Macedo
+logsource:
+  product: windows
+  category: process_creation
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    ParentImage|endswith: '\WmiPrvSE.exe'
+  condition: selection
+falsepositives:
+  - Ferramentas administrativas autorizadas
+level: high
+tags:
+  - attack.execution
+  - attack.t1047

@@ -1,0 +1,20 @@
+{
+  "host": "WIN-ENDPOINT",
+  "ip": "10.10.10.20",
+  "operating_system": "Windows 11 Pro",
+  "build": "22631",
+  "wazuh": "v4.12.0",
+  "virtualbox": "7.x",
+  "ubuntu": "24.04 LTS",
+  "sysmon": {
+    "channel": "Microsoft-Windows-Sysmon/Operational",
+    "executable": "C:\\Windows\\Sysmon64.exe",
+    "file_version_collection": "(Get-Item \"C:\\Windows\\Sysmon64.exe\").VersionInfo.FileVersion",
+    "status": "collect_during_endpoint_validation"
+  },
+  "wazuh_rule_ids": {
+    "powershell_encoded_command": 100001,
+    "registry_persistence": 100002,
+    "wmi_spawned_process": 100003
+  }
+}

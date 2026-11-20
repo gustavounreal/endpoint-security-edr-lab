@@ -1,0 +1,14 @@
+<Sysmon schemaversion="4.90">
+  <EventFiltering>
+    <ProcessCreate onmatch="exclude">
+      <Image condition="is">C:\Windows\System32\conhost.exe</Image>
+    </ProcessCreate>
+    <NetworkConnect onmatch="include">
+      <DestinationIp condition="begin with">10.10.10.</DestinationIp>
+    </NetworkConnect>
+    <RegistryEvent onmatch="include">
+      <TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
+      <TargetObject condition="contains">\EDR-LAB\</TargetObject>
+    </RegistryEvent>
+  </EventFiltering>
+</Sysmon>

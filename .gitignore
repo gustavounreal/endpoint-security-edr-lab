@@ -1,0 +1,9 @@
+evidence/**/*.evtx
+evidence/**/*.log
+evidence/**/*.png
+evidence/**/*.jpg
+evidence/**/*.jpeg
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db

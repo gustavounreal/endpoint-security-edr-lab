@@ -1,0 +1,46 @@
+{
+  "laboratory": "SOC-LAB",
+  "network": "10.10.10.0/24",
+  "dashboard_host_only": "192.168.56.10",
+  "dashboard_port": 443,
+  "agent_port": 1514,
+  "agents": {
+    "SOC-SERVER": {
+      "ip": "10.10.10.10",
+      "host_only_ip": "192.168.56.10",
+      "operating_system": "Ubuntu Server 24.04 LTS",
+      "role": "Wazuh Manager, Indexer and Dashboard"
+    },
+    "WIN-ENDPOINT": {
+      "ip": "10.10.10.20",
+      "operating_system": "Windows 11 Pro",
+      "build": "22631",
+      "role": "Sysmon, Microsoft Defender and Wazuh Agent"
+    },
+    "LINUX-ENDPOINT": {
+      "ip": "10.10.10.30",
+      "operating_system": "Ubuntu Server 24.04 LTS",
+      "role": "Endpoint Linux monitorado"
+    },
+    "KALI-ATTACKER": {
+      "ip": "10.10.10.40",
+      "operating_system": "Kali Linux",
+      "role": "Estacao de testes controlados"
+    }
+  },
+  "known_versions": {
+    "wazuh_dashboard": "v4.12.0",
+    "virtualbox": "7.x"
+  },
+  "sysmon": {
+    "exact_version_source": "C:\\Windows\\Sysmon64.exe",
+    "exact_version_collection": "Get-Item C:\\Windows\\Sysmon64.exe | Select-Object -ExpandProperty VersionInfo | Select-Object FileVersion",
+    "exact_version": "coletar na implantacao",
+    "channel": "Microsoft-Windows-Sysmon/Operational"
+  },
+  "wazuh_custom_rule_ids": {
+    "powershell_encoded_command": 100001,
+    "registry_persistence": 100002,
+    "wmi_spawned_process": 100003
+  }
+}

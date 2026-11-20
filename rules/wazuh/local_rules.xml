@@ -1,0 +1,29 @@
+<group name="sysmon,edr_lab,windows,">
+  <rule id="100001" level="12">
+    <field name="win.system.eventID">^1$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\\\powershell\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(-enc|-encodedcommand)</field>
+    <description>EDR-LAB: PowerShell encoded command detected</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100002" level="12">
+    <field name="win.system.eventID">^12$|^13$</field>
+    <field name="win.eventdata.targetObject" type="pcre2">(?i)(CurrentVersion\\\\Run|\\\\EDR-LAB\\\\)</field>
+    <description>EDR-LAB: Registry Run Key persistence detected</description>
+    <mitre>
+      <id>T1547.001</id>
+    </mitre>
+  </rule>
+
+  <rule id="100003" level="13">
+    <field name="win.system.eventID">^1$</field>
+    <field name="win.eventdata.parentImage" type="pcre2">(?i)\\\\WmiPrvSE\.exe$</field>
+    <description>EDR-LAB: Process created by WmiPrvSE.exe</description>
+    <mitre>
+      <id>T1047</id>
+    </mitre>
+  </rule>
+</group>

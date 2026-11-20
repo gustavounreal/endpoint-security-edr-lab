@@ -1,0 +1,24 @@
+title: Suspicious PowerShell Encoded Command
+id: 4cb1efaf-c6f7-4cfe-a0cf-5f2a15be5b83
+status: experimental
+description: Detecta PowerShell com argumento de comando codificado.
+author: Gustavo Ribeiro Macedo
+logsource:
+  product: windows
+  category: process_creation
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+  encoded:
+    CommandLine|contains:
+      - ' -enc '
+      - ' -EncodedCommand '
+  condition: selection and encoded
+falsepositives:
+  - Scripts administrativos conhecidos
+level: medium
+tags:
+  - attack.execution
+  - attack.t1059.001

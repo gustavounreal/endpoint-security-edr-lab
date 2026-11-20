@@ -1,0 +1,5 @@
+test_id,host_origin,ip_origin,host_destination,ip_destination,source,event_id,mitre,positive_test,negative_test,status
+DET-001,WIN-ENDPOINT,10.10.10.20,WIN-ENDPOINT,10.10.10.20,Sysmon,1,T1059.001,PowerShell encoded benigno,PowerShell administrativo conhecido,pronto_para_execucao
+DET-002,WIN-ENDPOINT,10.10.10.20,WIN-ENDPOINT,10.10.10.20,Sysmon,12/13,T1547.001,EDR-LAB Run key,Software homologado,pronto_para_execucao
+DET-003,KALI-ATTACKER,10.10.10.40,WIN-ENDPOINT,10.10.10.20,Sysmon,1,T1047,WmiPrvSE.exe como pai,Administracao WMI conhecida,pronto_para_execucao
+DET-004,KALI-ATTACKER,10.10.10.40,WIN-ENDPOINT,10.10.10.20,Sysmon,3,T1047,Conexao TCP associada,Conexao administrativa conhecida,pronto_para_execucao
