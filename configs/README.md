@@ -5,7 +5,7 @@ Coloque nesta pasta apenas configuracoes sanitizadas e versionadas.
 ## Arquivos recomendados
 
 - fragmento do `ossec.conf`;
-- configuracao ativa do Sysmon;
+- configuração ativa do Sysmon em `sysmonconfig.xml`;
 - regras locais de deteccao;
 - regras Sigma;
 - exportacao sanitizada de regras Wazuh;

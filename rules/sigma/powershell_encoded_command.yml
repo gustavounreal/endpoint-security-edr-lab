@@ -1,7 +1,7 @@
-title: Suspicious PowerShell Encoded Command
+title: PowerShell EncodedCommand Execution
 id: 4cb1efaf-c6f7-4cfe-a0cf-5f2a15be5b83
-status: experimental
-description: Detecta PowerShell com argumento de comando codificado.
+status: test
+description: Detects PowerShell execution with an encoded command argument.
 author: Gustavo Ribeiro Macedo
 logsource:
   product: windows
@@ -17,8 +17,9 @@ detection:
       - ' -EncodedCommand '
   condition: selection and encoded
 falsepositives:
-  - Scripts administrativos conhecidos
-level: medium
+  - Authorized administrative scripts
+  - Legitimate deployment tools
+level: high
 tags:
   - attack.execution
   - attack.t1059.001

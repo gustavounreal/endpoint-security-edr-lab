@@ -47,9 +47,22 @@ Os registros relevantes do Defender devem ser associados no Wazuh ao maior conte
 - tecnica ou hash correlacionado;
 - acao tomada.
 
-## Evidencias esperadas
+## Evidências registradas
 
-- Resultado de `Get-MpComputerStatus`.
-- Histórico de protecao.
-- Evento de alerta, quando houver.
-- Correlacao com evento Sysmon do mesmo periodo.
+### Estado do Microsoft Defender
+
+![Resultado de Get-MpComputerStatus](imagens/Resultado%20de%20%60Get-MpComputerStatus%60.jpg)
+
+*A captura mostra os serviços e proteções consultados habilitados, com `CloudProtectionLevel` em `High`.*
+
+### Histórico de proteção
+
+![Histórico de proteção do Windows Security](imagens/Hist%C3%B3rico%20de%20protecao.jpg)
+
+*O histórico registra a detecção do artefato de teste EICAR em 16/11/2026, com ação de bloqueio e quarentena/remoção.*
+
+### Alerta e eventos Sysmon
+
+![Alerta do Defender e eventos Sysmon no mesmo período](imagens/Evento%20de%20alerta%20e%20Correlacao%20com%20evento%20Sysmon%20do%20mesmo%20periodo.jpg)
+
+*A captura reúne uma detecção do Defender para EICAR e eventos Sysmon associados, com horário exibido de 26/11/2026 às 14:15:22 UTC.*

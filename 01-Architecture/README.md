@@ -69,82 +69,22 @@ Agentes: TCP 1514 -> SOC-SERVER
 - [ ] Sincronizacao de horario entre hosts.
 - [ ] Snapshot do estado limpo registrado.
 
-## Evidencias esperadas
+## Evidências da arquitetura
 
-- Diagrama da topologia.
-- Enderecamento da rede.
-- Status dos agentes no Wazuh.
-- Registro do canal Sysmon no endpoint.
-*** Add File: F:\VScodeProjects\endpoint-security-edr-lab\02-Sysmon-Deployment\README.md
-# 02 - Implantacao do Sysmon
+### Topologia do laboratório
 
-Este modulo documenta a coleta de telemetria do Windows com Sysmon.
+![Diagrama da topologia do laboratório](imagens/Diagrama%20da%20topologia.jpg)
 
-## Objetivo
+*O diagrama mostra o host físico, as redes de gerenciamento e SOC-LAB, os endpoints e os fluxos de telemetria.*
 
-Capturar execucao de processos, conexoes de rede e alteracoes de registro no canal:
+### Status dos agentes no Wazuh
 
-`Microsoft-Windows-Sysmon/Operational`
+![Status dos agentes no Wazuh](imagens/Status%20dos%20agentes%20no%20Wazuh.jpg)
 
-## Eventos utilizados
+*A captura de 16/11/2026 mostra WIN-ENDPOINT e LINUX-ENDPOINT ativos no momento do registro.*
 
-| EID | Significado |
-|---:|---|
-| 1 | Process Create |
-| 3 | Network Connection |
-| 12 | Registry Object Create/Delete |
-| 13 | Registry Value Set |
-| 19 | WMI Event Filter |
-| 20 | WMI Event Consumer |
-| 21 | WMI Consumer-to-Filter |
+### Canal Sysmon no endpoint
 
-## Campos essenciais
+![Canal Sysmon Operational no endpoint Windows](imagens/Registro%20do%20canal%20Sysmon%20no%20endpoint.jpg)
 
-- `UtcTime`
-- `Computer`
-- `User`
-- `Image`
-- `ProcessId`
-- `ParentImage`
-- `ParentProcessId`
-- `CommandLine`
-- `CurrentDirectory`
-- `Hashes`
-- `DestinationIp`
-- `DestinationPort`
-
-## Procedimento
-
-1. Baixar o pacote oficial do Sysmon.
-2. Validar a integridade do arquivo antes da instalacao.
-3. Selecionar uma configuracao modular adequada aos cenarios.
-4. Instalar o Sysmon como Administrador.
-5. Verificar o canal Sysmon no Windows.
-6. Configurar o Wazuh Agent para coletar o canal.
-7. Reiniciar o agente.
-8. Executar um processo benigno e confirmar o EID 1.
-
-## Validacao
-
-```powershell
-Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational" -MaxEvents 10 |
-  Format-Table TimeCreated, Id, Message -Wrap
-```
-
-## Configuracao no Wazuh
-
-Inclua no `ossec.conf` do agente Windows a consulta ao canal Sysmon, seguindo a sintaxe suportada pela versao instalada.
-
-Depois da configuracao:
-
-- reiniciar o Wazuh Agent;
-- revisar `C:\Program Files (x86)\ossec-agent\ossec.log`;
-- confirmar eventos no dashboard;
-- filtrar por `data.win.system.eventID`.
-
-## Evidencias esperadas
-
-- Print da instalacao concluida.
-- Evento EID 1 benigno.
-- Configuracao ativa no Gerenciador de Eventos.
-- Evento correspondente no Wazuh.
+*A captura mostra o canal Microsoft-Windows-Sysmon/Operational e eventos locais, incluindo um evento EID 1. Ela comprova a telemetria no endpoint, não a ingestão desse evento pelo Wazuh; essa validação pertence também ao [módulo de implantação do Sysmon](../02-Sysmon-Deployment/README.md).*

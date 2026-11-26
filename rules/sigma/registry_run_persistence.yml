@@ -1,7 +1,7 @@
 title: Registry Run Key Persistence
 id: 2cc1c48e-3aa5-4f33-aea1-12a0e12ee1b4
-status: experimental
-description: Detecta alteracoes em Run Keys ou chave de laboratorio.
+status: test
+description: Detects modifications to Windows Run and RunOnce autorun keys.
 author: Gustavo Ribeiro Macedo
 logsource:
   product: windows
@@ -14,11 +14,11 @@ detection:
       - 13
   target:
     TargetObject|contains:
-      - '\CurrentVersion\Run'
-      - '\EDR-LAB\'
+      - '\CurrentVersion\Run\'
+      - '\CurrentVersion\RunOnce\'
   condition: selection and target
 falsepositives:
-  - Instaladores e scripts homologados
+  - Authorized installers and administrative scripts
 level: high
 tags:
   - attack.persistence

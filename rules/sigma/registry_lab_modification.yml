@@ -1,0 +1,22 @@
+title: EDR-LAB Registry Validation Key Modification
+id: 4eb960e3-7ae5-4d34-aafb-1493dbe5b5e8
+status: test
+description: Detects changes to the EDR-LAB registry validation key.
+author: Gustavo Ribeiro Macedo
+logsource:
+  product: windows
+  category: registry_event
+  service: sysmon
+detection:
+  selection:
+    EventID:
+      - 12
+      - 13
+    TargetObject|contains: '\EDR-LAB\'
+  condition: selection
+falsepositives:
+  - Authorized laboratory validation
+level: low
+tags:
+  - attack.defense_evasion
+  - attack.t1112

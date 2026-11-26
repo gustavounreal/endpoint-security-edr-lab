@@ -6,15 +6,22 @@
   "wazuh": "v4.12.0",
   "virtualbox": "7.x",
   "ubuntu": "24.04 LTS",
+  "linux_endpoint": "Ubuntu Desktop 24.04 LTS",
   "sysmon": {
     "channel": "Microsoft-Windows-Sysmon/Operational",
     "executable": "C:\\Windows\\Sysmon64.exe",
+    "product_version_observed": "v15.15",
     "file_version_collection": "(Get-Item \"C:\\Windows\\Sysmon64.exe\").VersionInfo.FileVersion",
-    "status": "collect_during_endpoint_validation"
+    "file_version_status": "confirm_on_endpoint"
   },
   "wazuh_rule_ids": {
-    "powershell_encoded_command": 100001,
-    "registry_persistence": 100002,
-    "wmi_spawned_process": 100003
+    "powershell_spawned_from_cmd": 100001,
+    "registry_run_key_persistence": 100002,
+    "wmi_spawned_process": 100003,
+    "registry_lab_modification": 100013,
+    "powershell_encoded_command": 100059
+  },
+  "wazuh_observed_builtin_rule_ids": {
+    "sysmon_process_creation": 61603
   }
 }

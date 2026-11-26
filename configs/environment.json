@@ -19,7 +19,7 @@
     },
     "LINUX-ENDPOINT": {
       "ip": "10.10.10.30",
-      "operating_system": "Ubuntu Server 24.04 LTS",
+      "operating_system": "Ubuntu Desktop 24.04 LTS",
       "role": "Endpoint Linux monitorado"
     },
     "KALI-ATTACKER": {
@@ -33,14 +33,20 @@
     "virtualbox": "7.x"
   },
   "sysmon": {
+    "product_version_observed": "v15.15",
     "exact_version_source": "C:\\Windows\\Sysmon64.exe",
     "exact_version_collection": "Get-Item C:\\Windows\\Sysmon64.exe | Select-Object -ExpandProperty VersionInfo | Select-Object FileVersion",
-    "exact_version": "coletar na implantacao",
+    "exact_version_status": "confirm_file_version_on_endpoint",
     "channel": "Microsoft-Windows-Sysmon/Operational"
   },
   "wazuh_custom_rule_ids": {
-    "powershell_encoded_command": 100001,
-    "registry_persistence": 100002,
-    "wmi_spawned_process": 100003
+    "powershell_spawned_from_cmd": 100001,
+    "registry_run_key_persistence": 100002,
+    "wmi_spawned_process": 100003,
+    "registry_lab_modification": 100013,
+    "powershell_encoded_command": 100059
+  },
+  "wazuh_observed_builtin_rule_ids": {
+    "sysmon_process_creation": 61603
   }
 }

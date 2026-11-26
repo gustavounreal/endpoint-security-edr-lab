@@ -9,11 +9,12 @@ Este modulo documenta a coleta de telemetria do Windows com Sysmon.
 | Windows | Windows 11 Pro Build 22631 |
 | Endpoint | `WIN-ENDPOINT` - `10.10.10.20` |
 | Wazuh | v4.12.0 |
+| Sysmon | v15.15, conforme à captura de instalação |
 | VirtualBox | 7.x |
 | Ubuntu Server | 24.04 LTS |
 
-A versão exata do Sysmon deve ser registrada no relatório de implantação pelo
-comando abaixo, evitando atribuir uma versão não observada no ambiente.
+A captura mostra Sysmon v15.15. Registre também a versão exata do binário
+instalado no relatório de implantação:
 
 ```powershell
 (Get-Item "C:\Windows\Sysmon64.exe").VersionInfo.FileVersion
@@ -57,12 +58,15 @@ Capturar execucao de processos, conexoes de rede e alteracoes de registro no can
 
 1. Baixar o pacote oficial do Sysmon.
 2. Validar a integridade do arquivo antes da instalacao.
-3. Selecionar uma configuracao modular adequada aos cenarios.
+3. Selecionar a configuração versionada em `../configs/sysmonconfig.xml`.
 4. Instalar o Sysmon como Administrador.
 5. Verificar o canal Sysmon no Windows.
 6. Configurar o Wazuh Agent para coletar o canal.
 7. Reiniciar o agente.
 8. Executar um processo benigno e confirmar o EID 1.
+
+A configuração inclui conexões da rede `10.10.10.0/24` e o destino `8.8.8.8`
+observado na captura de hunting.
 
 ## Validacao
 
@@ -82,9 +86,22 @@ Depois da configuracao:
 - confirmar eventos no dashboard;
 - filtrar por `data.win.system.eventID`.
 
-## Evidencias esperadas
+## Evidências visuais
 
-- Print da instalacao concluida.
-- Evento EID 1 benigno.
-- Configuracao ativa no Gerenciador de Eventos.
-- Evento correspondente no Wazuh.
+### Instalação e serviço
+
+![Instalação do Sysmon e serviço iniciado](imagens/Print%20da%20instalacao%20concluida.jpg)
+
+### Canal e eventos no endpoint
+
+![Canal Sysmon Operational no Event Viewer](imagens/Configuracao%20ativa%20no%20Gerenciador%20de%20Eventos.jpg)
+
+
+### Evento EID 1 consultado localmente
+
+![Consulta local de um evento Sysmon EID 1 benigno](imagens/Evento%20EID%201%20benigno.jpg)
+
+
+### Evento recebido no Wazuh
+
+![Evento Sysmon EID 1 no Wazuh](imagens/Evento%20correspondente%20no%20Wazuh.jpg)

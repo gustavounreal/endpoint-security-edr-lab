@@ -1,5 +1,5 @@
-test_id,host_origin,ip_origin,host_destination,ip_destination,source,event_id,mitre,positive_test,negative_test,status
-DET-001,WIN-ENDPOINT,10.10.10.20,WIN-ENDPOINT,10.10.10.20,Sysmon,1,T1059.001,PowerShell encoded benigno,PowerShell administrativo conhecido,pronto_para_execucao
-DET-002,WIN-ENDPOINT,10.10.10.20,WIN-ENDPOINT,10.10.10.20,Sysmon,12/13,T1547.001,EDR-LAB Run key,Software homologado,pronto_para_execucao
-DET-003,KALI-ATTACKER,10.10.10.40,WIN-ENDPOINT,10.10.10.20,Sysmon,1,T1047,WmiPrvSE.exe como pai,Administracao WMI conhecida,pronto_para_execucao
-DET-004,KALI-ATTACKER,10.10.10.40,WIN-ENDPOINT,10.10.10.20,Sysmon,3,T1047,Conexao TCP associada,Conexao administrativa conhecida,pronto_para_execucao
+test_id,scenario_origin,origin_ip,scenario_target,target_ip,telemetry_source,event_id,mitre,wazuh_rule_id,observed_rule_id,positive_test,negative_test,status,evidence_note
+DET-001,WIN-ENDPOINT,10.10.10.20,WIN-ENDPOINT,10.10.10.20,Sysmon,1,T1059.001,100059,61603;100059,PowerShell encoded benigno,PowerShell administrativo conhecido,evidence_captured,"Capturas mostram também a regra padrão 61603 de criação de processo."
+DET-002,WIN-ENDPOINT,10.10.10.20,WIN-ENDPOINT,10.10.10.20,Sysmon,12/13,T1112,100013,,EDR-LAB registry modification,Software homologado,evidence_captured_review_pending,"O cartão individual marca T1547.001/medium e não expõe o ID; hunting mostra nível 3. A chave não é de inicialização automática (T1112), e a limpeza permanece inconclusiva."
+DET-003,KALI-ATTACKER,10.10.10.40,WIN-ENDPOINT,10.10.10.20,Sysmon,1,T1047,100003,,WmiPrvSE.exe como pai,Administracao WMI conhecida,evidence_captured_review_pending,"O cartão não mostra ID e exibe image como WIN-ENDPOINT; confirmar 100003 e processo pelo evento detalhado."
+DET-004,WIN-ENDPOINT,10.10.10.20,KALI-ATTACKER,10.10.10.40,Sysmon,3,T1047,,,Connection to 10.10.10.40:135,Conexao administrativa conhecida,evidence_captured_review_pending,"O EID 3 mostra .20 para .40:135; isso não estabelece a direção da chamada WMI."

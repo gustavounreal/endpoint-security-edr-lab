@@ -1,15 +1,15 @@
-# 05 - Persistencia por Registro
+# 05 - Monitoramento de Alterações no Registro
 
 ## Objetivo
 
-Criar um valor em uma chave autorizada de laboratorio e detectar a alteracao com Sysmon.
+Criar um valor em uma chave de validação do laboratório e detectar a alteração com Sysmon.
 
-**MITRE ATT&CK:** T1547.001 - Registry Run Keys / Startup Folder
+**MITRE ATT&CK:** T1112 - Modify Registry
 **Eventos-chave:** Sysmon EID 12 e EID 13
 
 ## Atividade controlada
 
-O teste deve usar uma entrada claramente identificavel e um comando benigno que apenas cria um arquivo de prova no diretorio temporario do laboratorio.
+O teste usa uma chave claramente identificável fora dos locais de inicialização automática. Ele registra uma alteração de registro, mas não demonstra persistência de execução.
 
 Exemplo de registro:
 
@@ -30,13 +30,23 @@ Este arquivo não deve apontar para malware, ferramentas externas ou executaveis
 - `Details`
 - `RuleName`
 
-## Validacao
+## Validação
+
+Use esta checagem em uma nova execução; ela não é o comando exibido na captura.
 
 ```powershell
-Get-ItemProperty -Path "HKLM:\Software\EDR-LAB" -ErrorAction Stop
+$Path = "HKLM:\Software\EDR-LAB\RunKeyValidation"
+if (Test-Path -LiteralPath $Path) {
+    Get-ItemProperty -LiteralPath $Path
+} else {
+    Write-Output "Validation key does not exist: $Path"
+}
 ```
 
 O teste pode ser executado em `HKCU`, mas deve ser registrado qual nivel de privilégio foi usado.
+A busca de hunting inclui a regra Wazuh `100013` para a alteração EDR-LAB; o
+cartão de alerta isolado não exibe o ID. T1547.001 e a regra `100002` ficam
+reservadas para alterações reais em `Run`/`RunOnce`.
 
 ## Procedimento
 
@@ -66,10 +76,12 @@ O teste pode ser executado em `HKCU`, mas deve ser registrado qual nivel de priv
 - Restaurar o endpoint.
 - Registrar a linha do tempo.
 
-## Evidencias esperadas
+## Evidência do cenário
 
-- Estado inicial da chave.
-- EID 12 ou 13 com alvo, usuario e processo.
-- Detalhe no Wazuh.
-- Comando de remocao.
-- Confirmacao de remocao.
+![Alteração de registro, alerta e tentativa de limpeza](imagens/consolidade.png)
+
+*A captura mostra os eventos Sysmon EID 12/13 e um alerta Wazuh marcado como
+T1547.001/medium. As consultas PowerShell ao caminho base retornam
+`PathNotFound` antes e depois do teste; por isso, essa captura não confirma o
+estado inicial nem a remoção completa. O caminho do evento é
+`HKLM\Software\EDR-LAB\RunKeyValidation`, classificado neste projeto como T1112.*

@@ -8,10 +8,13 @@
 - Evento Sysmon: EID 1 no destino e EID 3 associado;
 - Regra acionada: `WMI Spawned Process`;
 - Resultado positivo: processo filho com pai `WmiPrvSE.exe`;
+- Identidade da autenticação: `KALI-ATTACKER\kali`; processo observado como `NT AUTHORITY\SYSTEM`;
+- EID 3 observado: `10.10.10.20` -> `10.10.10.40:135`;
 - Resultado negativo: ferramenta WMI conhecida nao gera incidente sem anomalia;
-- Captura: adicionar exportacao e prints sanitized em `evidence/03-wmi/`;
+- Captura: [imagem do módulo 06](../06-WMI-Lateral-Movement/imagens/eventos%20Wazuh%20e%20Windows.png); exportações sanitizadas ainda devem ser registradas em `evidence/03-wmi/`;
 - Remocao: interromper processo criado e verificar estado do destino;
-- Wazuh rule ID final: `100003`;
+- Wazuh rule ID: `100003` - nível 3 (nível médio exibido na captura);
+- O cartão individual não exibe o ID e mostra `data.win.eventdata.image` como `WIN-ENDPOINT`; confirmar a atribuição pelo evento Sysmon detalhado;
 - Limitacoes: somente chamar movimento lateral após confirmar origem, destino e processo remoto.
 
 ## Timeline

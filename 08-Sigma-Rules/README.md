@@ -13,34 +13,47 @@ Este modulo organiza regras de deteccao em formato Sigma e sua correspondencia n
 ## Estrutura de uma regra
 
 ```yaml
-title:
-  Identificador da deteccao
+title: PowerShell EncodedCommand Execution
 status: test
-description:
-  Descricao objetiva do comportamento observado
+description: Detects PowerShell execution with an encoded command argument.
 logsource:
   product: windows
+  category: process_creation
   service: sysmon
 detection:
-  selecao:
+  selection:
     EventID: 1
-  condicao: selecao
+    Image|endswith: '\powershell.exe'
+  encoded:
+    CommandLine|contains:
+      - ' -enc '
+      - ' -EncodedCommand '
+  condition: selection and encoded
 falsepositives:
-  - Automação administrativa conhecida
-level: medium
+  - Authorized administrative scripts
+level: high
 tags:
   - attack.execution
   - attack.t1059.001
 ```
 
-## Regras planejadas
+## Mapeamento de regras
 
-| Detecção | Nivel inicial |
-|---|---|
-| PowerShell com argumento codificado | medium |
-| Processo com pai WmiPrvSE.exe | high |
-| Alteracao em chave Run/RunOnce | high |
-| Processo filho incomum após WMI | high |
+| Detecção | Sigma level | Wazuh Rule ID | Wazuh level |
+|---|---|---:|---:|
+| PowerShell com argumento codificado | high | 100059 | 12 |
+| PowerShell iniciado por `cmd.exe` | — | 100001 | 3 |
+| Alteração na chave de validação `EDR-LAB` | low | 100013 | 3 |
+| Alteração em chave Run/RunOnce | high | 100002 | 12 |
+| Processo filho de `WmiPrvSE.exe` | high | 100003 | 3 |
+
+O ID `61603` mostrado em uma captura é a regra padrão do Wazuh para criação
+de processo Sysmon, não uma regra Sigma ou local do projeto.
+
+A captura Sigma aparenta concatenar duas regras e não mostra seleções/condições
+completas; também lista T1059.002/.003, que não correspondem à execução de
+PowerShell mostrada. As regras do projeto permanecem separadas, estruturadas e
+com o mapeamento PowerShell correto T1059.001.
 
 ## Validacao
 
@@ -54,10 +67,8 @@ Cada regra deve ser validada contra:
 - formatacao suportada pelo parser;
 - baixa taxa de falso positivo.
 
-## Evidencias esperadas
+## Evidência do módulo
 
-- Arquivos YAML versionados.
-- Evento positivo usado no teste.
-- Evento negativo usado no teste.
-- Resultado no Wazuh.
-- Justificativa de nivel e falso positivo.
+![Regras Sigma, evento Sysmon e alerta no Wazuh](imagens/evidencias.jpg)
+
+*Captura composta com regras Sigma no editor, eventos Sysmon EID 1, alerta correspondente no Wazuh e justificativa de severidade e falsos positivos.*

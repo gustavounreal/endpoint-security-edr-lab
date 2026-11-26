@@ -68,9 +68,13 @@ Não executar payload, download, persistencia ou acesso externo a partir deste t
 - Remover artefatos temporarios.
 - Abrir chamado de escalonamento.
 
-## Evidencias esperadas
+## Regras Wazuh observadas
 
-- EID 1 no Gerenciador de Eventos.
-- Detalhe no Wazuh com `Image`, `CommandLine`, `User` e `ParentImage`.
-- Decodificacao do argumento.
-- Linha do tempo e classificacao.
+- `61603`: regra padrão para criação de processo Sysmon, visível na captura do caso.
+- `100059`: regra local específica para `-EncodedCommand`, visível na validação das regras.
+
+## Evidências
+
+![Investigação de PowerShell codificado com Sysmon e Wazuh](imagens/Alerta%20do%20Microsoft%20Defender%20e%20telemetria%20Sysmon.jpg)
+
+*Captura composta da investigação: evento Sysmon EID 1, alerta e campos do processo no Wazuh, decodificação offline para `LAB-EXECUTED-SAFE` e resumo da linha do tempo e classificação.*

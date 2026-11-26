@@ -18,6 +18,19 @@ O cenário é considerado movimento lateral entre hosts diferentes por confirmar
 origem Linux, destino Windows, processo remoto criado, usuário utilizado e evento
 de processo filho com `WmiPrvSE.exe` no destino.
 
+## Identidades e rede observadas
+
+- A autenticação 4624 registra a conta `KALI-ATTACKER\kali` e a origem `10.10.10.40`.
+- O processo `WmiPrvSE.exe` e o alerta Wazuh aparecem como `NT AUTHORITY\SYSTEM`.
+- O EID 3 capturado no endpoint registra a conexão de `10.10.10.20` para
+  `10.10.10.40:135`; esse é o sentido do evento de conexão, separado da origem
+  da chamada WMI.
+- O alerta Wazuh observado é nível 3 (mapeado como médio na interface) e
+  corresponde à regra local `100003`.
+- No cartão Wazuh, `data.win.eventdata.image` aparece como `WIN-ENDPOINT`, não
+  como caminho de executável. A atribuição do processo deve usar os eventos
+  Sysmon EID 1/4688; o cartão também não exibe o ID da regra.
+
 ## Campos a investigar
 
 ### Origem
@@ -76,10 +89,8 @@ UTC | Origem | Usuario | Ação | Destino | Processo criado | Resultado
 - Bloquear compartilhamentos ou credenciais, conforme a politica.
 - Investigar o destino por persistencia ou artefatos posteriores.
 
-## Evidencias esperadas
+## Evidência do cenário
 
-- Autenticacao ou inicio de sessão no destino.
-- EID 1 com `WmiPrvSE.exe`.
-- Processo filho benigno.
-- EID 3 associado.
-- Consulta correlacionada no Wazuh.
+![Eventos de autenticação, Sysmon e Wazuh do cenário WMI](imagens/eventos%20Wazuh%20e%20Windows.png)
+
+*Captura consolidada com evento de logon 4624, eventos Sysmon EID 1 e EID 3, processo filho associado a `WmiPrvSE.exe` e alerta/consulta no Wazuh.*

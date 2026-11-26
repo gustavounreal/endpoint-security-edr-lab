@@ -1,6 +1,6 @@
 # Endpoint Security - EDR & Threat Hunting Lab
 
-[![Status](https://img.shields.io/badge/status-concluido-success)]()
+[![Status](https://img.shields.io/badge/status-em%20andamento-orange)]()
 [![Sysmon](https://img.shields.io/badge/Sysmon-telemetry-0078D4)]()
 [![Wazuh](https://img.shields.io/badge/Wazuh-SIEM-005EB8)]()
 [![MITRE](https://img.shields.io/badge/MITRE-ATT%26CK-red)]()
@@ -22,7 +22,7 @@ Os cenarios foram estruturados para validar competencias de analise de logs, det
 |---|---|---|---|
 | SOC-SERVER | Ubuntu Server 24.04 LTS | `10.10.10.10` | Wazuh Manager, Indexer e Dashboard |
 | WIN-ENDPOINT | Windows 11 Pro Build 22631 | `10.10.10.20` | Endpoint Sysmon, Defender e Wazuh Agent |
-| LINUX-ENDPOINT | Ubuntu Server 24.04 LTS | `10.10.10.30` | Endpoint Linux monitorado |
+| LINUX-ENDPOINT | Ubuntu Desktop 24.04 LTS | `10.10.10.30` | Endpoint Linux monitorado |
 | KALI-ATTACKER | Kali Linux | `10.10.10.40` | Estacao de testes autorizados |
 | VirtualBox | 7.x | Host | Virtualizacao e rede SOC-LAB |
 | Wazuh Agent | v4.12.0 | TCP 1514 | Transmissao dos logs do Windows |
@@ -40,7 +40,7 @@ Porta dos agentes: TCP `1514`.
 | Modulo | Tecnica MITRE | Evidencia principal |
 |---|---|---|
 | [Execucao suspeita](04-Suspicious-PowerShell/README.md) | T1059.001 - PowerShell | Sysmon EID 1 com linha de comando |
-| [Persistencia em registro](05-Registry-Persistence/README.md) | T1547.001 - Registry Run Keys | Sysmon EID 12/13 |
+| [Alteração de registro](05-Registry-Persistence/README.md) | T1112 - Modify Registry | Sysmon EID 12/13 |
 | [Execucao via WMI](06-WMI-Lateral-Movement/README.md) | T1047 - Windows Management Instrumentation | EID 1 com `WmiPrvSE.exe` como pai |
 | [Threat hunting](07-Threat-Hunting/README.md) | Hunting behavior-based | Correlacao de processo, rede e registro |
 | [Regras Sigma](08-Sigma-Rules/README.md) | Detection engineering | Regras versionadas e criterios testaveis |
@@ -99,14 +99,14 @@ Este projeto reutiliza os fundamentos do [SOC Home Lab — Wazuh SIEM & Threat D
 
 ## Nota sobre evidencias
 
-Os arquivos em `evidence/` devem conter apenas capturas, logs exportados e identificadores obtidos durante a execucao real. Nenhum resultado deve ser considerado comprovado sem evidência reproduzivel.
+Os arquivos em `evidence/` devem conter logs exportados e identificadores obtidos durante a execucao real. As capturas visuais ficam nas pastas `imagens/` dos módulos e são vinculadas por seus READMEs. Nenhum resultado deve ser considerado comprovado sem evidência reproduzivel.
 
 ## Checklist de comprovação
 
 | Item | Artefato disponível |
 |---|---|
 | Topologia do laboratório | `01-Architecture/README.md` |
-| Configuração Sysmon | `configs/sysmon-config.xml` |
+| Configuração Sysmon | `configs/sysmonconfig.xml` |
 | Configuração Wazuh Agent | `configs/ossec-sysmon.conf` |
 | Versões conhecidas | `configs/environment.json` |
 | Regras Sigma | `rules/sigma/*.yml` |
@@ -115,4 +115,4 @@ Os arquivos em `evidence/` devem conter apenas capturas, logs exportados e ident
 | Script de teste controlado | `scripts/run-controlled-tests.ps1` |
 | Script de limpeza | `scripts/verify-cleanup.ps1` |
 | Relatórios | `reports/incident-*.md` |
-| Evidências visuais | `evidence/` |
+| Evidências visuais | Pastas `imagens/` dos módulos |

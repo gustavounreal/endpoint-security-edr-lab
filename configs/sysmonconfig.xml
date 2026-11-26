@@ -5,6 +5,7 @@
     </ProcessCreate>
     <NetworkConnect onmatch="include">
       <DestinationIp condition="begin with">10.10.10.</DestinationIp>
+      <DestinationIp condition="is">8.8.8.8</DestinationIp>
     </NetworkConnect>
     <RegistryEvent onmatch="include">
       <TargetObject condition="contains">\CurrentVersion\Run</TargetObject>
